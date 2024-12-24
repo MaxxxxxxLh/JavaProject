@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class Projet {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String nom;
 

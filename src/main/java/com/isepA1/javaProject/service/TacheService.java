@@ -10,21 +10,6 @@ import java.util.List;
 public class TacheService {
     @Autowired
     private TacheRepository tacheRepository;
-    public List<Tache> getAllTaches(){
-        return tacheRepository.findAll();
-    }
-    public void creerTache(){
 
-    }
-    public void modifierTache(){
 
-    }
-    public void supprimerTache(){
-
-    }
-    public void attribuerTache(){
-
-    }
-    public void modifierEtat(){
-    }
 }
