@@ -3,6 +3,8 @@ package com.isepA1.javaProject.model.dto;
 import com.isepA1.javaProject.model.enums.Priorite;
 import com.isepA1.javaProject.model.enums.Etat;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.Date;
@@ -15,7 +17,6 @@ public class TacheDto {
 
     private long id;
 
-    @NotNull(message = "La priorité doit être définie.")
     private Priorite priorite;
 
     private Date dateLimite;
@@ -26,10 +27,10 @@ public class TacheDto {
     @Size(max = 500, message = "Le commentaire ne peut pas dépasser 500 caractères.")
     private String commentaires;
 
-    @NotNull(message = "L'état de la tâche est obligatoire.")
     private Etat etat;
+    @NotNull ProjetDto projetDto;
 
-    public TacheDto(String nom, long id, Priorite priorite, Date dateLimite, String categorie, String commentaires, Etat etat) {
+    public TacheDto(String nom, long id, Priorite priorite, Date dateLimite, String categorie, String commentaires, Etat etat, ProjetDto projetDto) {
         this.nom = nom;
         this.id = id;
         this.priorite = priorite;
@@ -37,6 +38,7 @@ public class TacheDto {
         this.categorie = categorie;
         this.commentaires = commentaires;
         this.etat = etat;
+        this.projetDto = projetDto;
     }
 
     // Getters et setters
@@ -94,5 +96,13 @@ public class TacheDto {
 
     public void setEtat(Etat etat) {
         this.etat = etat;
+    }
+
+    public ProjetDto getProjetDto() {
+        return this.projetDto;
+    }
+
+    public void setProjetDto(ProjetDto projetDto) {
+        this.projetDto = projetDto;
     }
 }

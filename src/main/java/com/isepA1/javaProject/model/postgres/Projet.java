@@ -1,22 +1,27 @@
 package com.isepA1.javaProject.model.postgres;
 
-import com.isepA1.javaProject.model.dto.EmployeDto;
-import com.isepA1.javaProject.model.dto.TacheDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 @Entity
 public class Projet {
     @Id
-    private String nom;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String nom;
+
+    @OneToMany(mappedBy = "projet")
     private List<Tache> listeTaches;
     private Date dateLimite;
+    @ManyToMany
+    @JoinTable(
+            name="projets_membres",
+            joinColumns = @JoinColumn(name="projet_id"),
+            inverseJoinColumns = @JoinColumn(name="membre_id")
+    )
     private List<Employe> membres;
 
     public Projet(long id, String nom, Date dateLimite) {

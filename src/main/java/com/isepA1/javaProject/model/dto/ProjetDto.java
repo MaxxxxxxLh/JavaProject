@@ -1,5 +1,7 @@
 package com.isepA1.javaProject.model.dto;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,7 +20,6 @@ public class ProjetDto {
     @NotNull(message = "La date limite ne peut pas être nulle.")
     @Future(message = "La date limite doit être dans le futur.")
     private Date dateLimite;
-
     private List<TacheDto> listeTaches;
     private List<EmployeDto> membres;
 
