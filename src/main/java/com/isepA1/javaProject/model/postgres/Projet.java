@@ -23,6 +23,7 @@ public class Projet {
             inverseJoinColumns = @JoinColumn(name="membre_id")
     )
     private List<Employe> membres;
+    public Projet(){}
 
     public Projet(long id, String nom, Date dateLimite) {
         this.id = id;

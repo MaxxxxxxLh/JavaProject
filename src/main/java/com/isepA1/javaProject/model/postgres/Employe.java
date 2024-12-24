@@ -18,6 +18,7 @@ public class Employe {
 
     @ManyToMany(mappedBy = "membres")
     private List<Projet> historiqueProjets;
+    public Employe(){}
     public Employe(String nom, String prenom, String email, String password){
         this.nom = nom;
         this.prenom = prenom;

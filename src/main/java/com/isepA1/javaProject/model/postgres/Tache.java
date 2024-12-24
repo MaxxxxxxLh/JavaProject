@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 public class Tache {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String nom;
 
@@ -24,6 +24,7 @@ public class Tache {
     @ManyToOne
     @JoinColumn(name = "projet_id")
     private Projet projet;
+    public Tache(){}
     public Tache(String nom, long id, Date dateLimite, Projet projet){
         this.nom = nom;
         this.id = id;
