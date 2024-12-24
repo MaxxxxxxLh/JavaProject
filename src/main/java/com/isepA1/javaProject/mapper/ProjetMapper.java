@@ -1,8 +1,6 @@
 package com.isepA1.javaProject.mapper;
 
-import com.isepA1.javaProject.model.dto.EmployeDto;
 import com.isepA1.javaProject.model.dto.ProjetDto;
-import com.isepA1.javaProject.model.postgres.Employe;
 import com.isepA1.javaProject.model.postgres.Projet;
 
 public class ProjetMapper {

@@ -10,15 +10,17 @@ public class EmployeMapper {
         return new EmployeDto(
                 employe.getId(),
                 employe.getNom(),
-                employe.getPrenom()
+                employe.getPrenom(),
+                employe.getEmail()
         );
     }
 
     public static Employe employeToEntity(EmployeDto dto) {
-        Employe employe = new Employe(dto.getNom(),dto.getPrenom(), dto.getId());
-        employe.setId(dto.getId());
-        employe.setNom(dto.getNom());
-        employe.setPrenom(dto.getPrenom());
-        return employe;
+        return new Employe(
+                dto.getNom(),
+                dto.getPrenom(),
+                dto.getEmail(),
+                dto.getId()
+        );
     }
 }

@@ -12,11 +12,13 @@ public class Employe {
     @Id
     private String nom;
     private String prenom;
+    private String email;
     private long id;
     private List<Projet> historiqueProjets;
-    public Employe(String nom, String prenom, long id){
+    public Employe(String nom, String prenom, String email, long id){
         this.nom = nom;
         this.prenom = prenom;
+        this.email = email;
         this.id = id;
         this.historiqueProjets = new ArrayList<>();
     }
@@ -45,6 +47,8 @@ public class Employe {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+    public String getEmail(){return this.email;}
+    public void setEmail(String email){this.email = email;}
 
     public List<Projet> getHistoriqueProjets() {
         return this.historiqueProjets;

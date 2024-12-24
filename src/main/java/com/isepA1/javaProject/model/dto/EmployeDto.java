@@ -14,13 +14,17 @@ public class EmployeDto {
     @NotNull
     @Size(min = 1, message = "Le prénom de l'employé ne peut pas être vide.")
     private String prenom;
+    @NotNull
+    @Size(min = 1, message = "L'adresse mail de l'employé ne peut aps être vide.")
+    private String email;
     private List<ProjetDto> historiqueProjets;
 
 
-    public EmployeDto(long id, String nom, String prenom) {
+    public EmployeDto(long id, String nom, String prenom, String email) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
+        this.email = email;
         this.historiqueProjets = new ArrayList<>();
     }
 
@@ -47,6 +51,14 @@ public class EmployeDto {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<ProjetDto> getHistoriqueProjets() {
