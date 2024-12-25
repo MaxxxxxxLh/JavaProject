@@ -15,16 +15,20 @@ public class EmployeDto {
     @Size(min = 1, message = "Le prénom de l'employé ne peut pas être vide.")
     private String prenom;
     @NotNull
-    @Size(min = 1, message = "L'adresse mail de l'employé ne peut aps être vide.")
+    @Size(min = 1, message = "L'adresse mail de l'employé ne peut pas être vide.")
     private String email;
+    @NotNull
+    @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères")
+    private String password;
     private List<ProjetDto> historiqueProjets;
 
 
-    public EmployeDto(long id, String nom, String prenom, String email) {
+    public EmployeDto(long id, String nom, String prenom, String email, String password) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
+        this.password = password;
         this.historiqueProjets = new ArrayList<>();
     }
 
@@ -59,6 +63,14 @@ public class EmployeDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<ProjetDto> getHistoriqueProjets() {

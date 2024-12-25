@@ -2,29 +2,38 @@ package com.isepA1.javaProject.model.postgres;
 
 import com.isepA1.javaProject.model.enums.Priorite;
 import com.isepA1.javaProject.model.enums.Etat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
 public class Tache {
     @Id
-    private String nom;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+    private String nom;
+
+    @Enumerated(EnumType.STRING)
     private Priorite priorite;
     private Date dateLimite;
     private String categorie;
     private String commentaires;
+
+    @Enumerated(EnumType.STRING)
     private Etat etat;
-    public Tache(String nom, long id, Date dateLimite){
+    @ManyToOne
+    @JoinColumn(name = "projet_id")
+    private Projet projet;
+    public Tache(){}
+    public Tache(String nom, long id, Date dateLimite, Projet projet){
         this.nom = nom;
         this.id = id;
         this.dateLimite = dateLimite;
-        this.priorite = Priorite.Urgent;
+        this.priorite = Priorite.URGENT;
         this.categorie = "";
         this.commentaires = "";
-        this.etat = Etat.A_Faire;
+        this.etat = Etat.A_FAIRE;
+        this.projet = projet;
     }
 
     public String getNom() {
@@ -79,5 +88,12 @@ public class Tache {
 
     public void setEtat(Etat etat) {
         this.etat = etat;
+    }
+    public Projet getProjet(){
+        return this.projet;
+    }
+
+    public void setProjet(Projet projet) {
+        this.projet = projet;
     }
 }

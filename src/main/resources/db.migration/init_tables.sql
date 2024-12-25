@@ -15,11 +15,11 @@ create table Projet (
 create table Tache (
     id INT PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
-    priorite VARCHAR(50),
+    priorite VARCHAR,
     dateLimite DATE,
     categorie VARCHAR(50),
     commentaires TEXT,
-    etat VARCHAR(50),
+    etat VARCHAR,
     projetId INT,
     FOREIGN KEY (projetId) REFERENCES Projet(id) ON DELETE CASCADE
 );
