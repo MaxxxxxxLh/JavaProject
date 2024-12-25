@@ -22,7 +22,7 @@ public class Tache {
     @Enumerated(EnumType.STRING)
     private Etat etat;
     @ManyToOne
-    @JoinColumn(name = "projet_id")
+    @JoinColumn(name = "projetId")
     private Projet projet;
     public Tache(){}
     public Tache(String nom, long id, Date dateLimite, Projet projet){
