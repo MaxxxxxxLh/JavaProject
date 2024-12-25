@@ -2,6 +2,8 @@ package com.isepA1.javaProject.model.postgres;
 
 import com.isepA1.javaProject.model.dto.ProjetDto;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
