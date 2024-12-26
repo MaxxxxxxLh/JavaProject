@@ -25,8 +25,7 @@ public class Projet {
     private List<Employe> membres;
     public Projet(){}
 
-    public Projet(long id, String nom, Date dateLimite) {
-        this.id = id;
+    public Projet(String nom, Date dateLimite) {
         this.nom = nom;
         this.dateLimite = dateLimite;
         this.listeTaches = new ArrayList<>();

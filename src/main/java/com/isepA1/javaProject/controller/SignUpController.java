@@ -3,6 +3,7 @@ package com.isepA1.javaProject.controller;
 import com.isepA1.javaProject.model.postgres.Employe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
@@ -30,7 +31,7 @@ public class SignUpController {
     private Button signUpButton;
 
     @FXML
-    private TextField errorMessage;
+    private Label errorMessage;
 
     @FXML
     private void handleSignUp(ActionEvent event) {

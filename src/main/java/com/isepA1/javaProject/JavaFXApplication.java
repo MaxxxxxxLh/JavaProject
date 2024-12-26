@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.io.IOException;
+
 public class JavaFXApplication extends Application {
 
     private ConfigurableApplicationContext context;
@@ -17,10 +19,12 @@ public class JavaFXApplication extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/signUpView.fxml"));
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(JavaFXApplication.class.getResource("signUpView.fxml"));
+
         fxmlLoader.setControllerFactory(context::getBean);
-        Scene scene = new Scene(fxmlLoader.load());
+
+        Scene scene = new Scene(fxmlLoader.load() );
 
         primaryStage.setTitle("Sign Up");
         primaryStage.setScene(scene);
@@ -33,6 +37,6 @@ public class JavaFXApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }
