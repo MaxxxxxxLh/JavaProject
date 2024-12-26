@@ -12,7 +12,11 @@ import java.util.Optional;
 @Service
 public class TacheService {
     @Autowired
-    private TacheRepository tacheRepository;
+    private final TacheRepository tacheRepository;
+
+    public TacheService(TacheRepository tacheRepository) {
+        this.tacheRepository = tacheRepository;
+    }
 
     public List<Tache> getAllTaches() {
         return tacheRepository.findAll();
