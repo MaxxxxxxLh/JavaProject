@@ -14,7 +14,6 @@ public class ProjetMapper {
 
     public static Projet projetToEntity(ProjetDto dto){
         return new Projet(
-                dto.getId(),
                 dto.getNom(),
                 dto.getDateLimite()
         );

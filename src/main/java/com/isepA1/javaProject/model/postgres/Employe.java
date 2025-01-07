@@ -1,6 +1,5 @@
 package com.isepA1.javaProject.model.postgres;
 
-import com.isepA1.javaProject.model.dto.ProjetDto;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class Employe {
         this.password = password;
         this.historiqueProjets = new ArrayList<>();
     }
-
+    // Getters et setters
 
     public long getId() {
         return this.id;

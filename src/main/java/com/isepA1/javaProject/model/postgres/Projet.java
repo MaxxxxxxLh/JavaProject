@@ -19,14 +19,13 @@ public class Projet {
     @ManyToMany
     @JoinTable(
             name="projets_membres",
-            joinColumns = @JoinColumn(name="projet_id"),
-            inverseJoinColumns = @JoinColumn(name="membre_id")
+            joinColumns = @JoinColumn(name="projetId"),
+            inverseJoinColumns = @JoinColumn(name="employeId")
     )
     private List<Employe> membres;
     public Projet(){}
 
-    public Projet(long id, String nom, Date dateLimite) {
-        this.id = id;
+    public Projet(String nom, Date dateLimite) {
         this.nom = nom;
         this.dateLimite = dateLimite;
         this.listeTaches = new ArrayList<>();

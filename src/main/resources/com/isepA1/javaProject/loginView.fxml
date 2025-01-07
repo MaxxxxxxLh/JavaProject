@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.isepA1.javaProject.controller.LoginController">
+   <children>
+      <VBox alignment="CENTER" layoutX="-1.0" layoutY="1.0" prefHeight="578.0" prefWidth="455.0">
+         <children>
+            <Label text="Login">
+               <VBox.margin>
+                  <Insets bottom="100.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER_LEFT" prefHeight="69.0" prefWidth="500.0">
+               <children>
+                  <TextField fx:id="emailField" prefHeight="0.0" prefWidth="500.0" promptText="Email" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="500.0">
+               <children>
+                  <PasswordField fx:id="passwordField" promptText="Password" />
+               </children>
+            </VBox>
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="LOGIN" />
+            <Label fx:id="errorMessage" textFill="RED" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Hyperlink fx:id="signUpLink" onAction="#redirectToSignUp" text="Don't have an account?" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Hyperlink fx:id="forgotPasswordLink" onAction="#handleForgotPasswordLinkClick" text="Forgot your password?" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

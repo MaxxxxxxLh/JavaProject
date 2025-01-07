@@ -22,12 +22,11 @@ public class Tache {
     @Enumerated(EnumType.STRING)
     private Etat etat;
     @ManyToOne
-    @JoinColumn(name = "projet_id")
+    @JoinColumn(name = "projetId")
     private Projet projet;
     public Tache(){}
-    public Tache(String nom, long id, Date dateLimite, Projet projet){
+    public Tache(String nom, Date dateLimite, Projet projet){
         this.nom = nom;
-        this.id = id;
         this.dateLimite = dateLimite;
         this.priorite = Priorite.URGENT;
         this.categorie = "";
@@ -36,6 +35,7 @@ public class Tache {
         this.projet = projet;
     }
 
+    // Getters et setters
     public String getNom() {
         return this.nom;
     }
