@@ -6,6 +6,7 @@ import com.isepA1.javaProject.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,4 +37,15 @@ public class ProjetService {
         projet.getMembres().add(employe);
         projetRepository.save(projet);
     }
+    public List<String> getAllProjectNames() {
+        List<Projet> projets = projetRepository.findAll();
+
+        List<String> projectNames = new ArrayList<>();
+        for (Projet projet : projets) {
+            projectNames.add(projet.getNom());
+        }
+
+        return projectNames;
+    }
+
 }
