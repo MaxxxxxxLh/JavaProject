@@ -1,6 +1,7 @@
 package com.isepA1.javaProject.controller;
 
 import com.isepA1.javaProject.model.postgres.Tache;
+import com.isepA1.javaProject.service.TacheService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +26,11 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
+@Component
 public class CalendarController implements Initializable {
+    @Autowired
+    private TacheService tacheService;
+
 
     ZonedDateTime dateFocus;
     ZonedDateTime today;
@@ -67,7 +75,7 @@ public class CalendarController implements Initializable {
         double spacingH = calendar.getHgap();
         double spacingV = calendar.getVgap();
 
-        Map<Integer, List<Tache>> tachesMap = getCalendarTachesMonth(dateFocus);
+        Map<Integer, List<Tache>> tachesMap = createCalendarMap(tacheService.getAllTaches());
 
         int monthMaxDate = dateFocus.getMonth().maxLength();
         if(dateFocus.getYear() % 4 != 0 && monthMaxDate == 29){
@@ -151,19 +159,5 @@ public class CalendarController implements Initializable {
             }
         }
         return  tachesMap;
-    }
-
-    private Map<Integer, List<Tache>> getCalendarTachesMonth(ZonedDateTime dateFocus) {
-        List<Tache> taches = new ArrayList<>();
-        int year = dateFocus.getYear();
-        int month = dateFocus.getMonth().getValue();
-
-        Random random = new Random();
-        for (int i = 0; i < 50; i++) {
-            ZonedDateTime time = ZonedDateTime.of(year, month, random.nextInt(27)+1, 16,0,0,0,dateFocus.getZone());
-            taches.add(new Tache());
-        }
-
-        return createCalendarMap(taches);
     }
 }
