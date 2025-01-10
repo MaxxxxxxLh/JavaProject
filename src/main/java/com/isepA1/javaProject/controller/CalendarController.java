@@ -83,40 +83,46 @@ public class CalendarController implements Initializable {
         }
         int dateOffset = ZonedDateTime.of(dateFocus.getYear(), dateFocus.getMonthValue(), 1,0,0,0,0,dateFocus.getZone()).getDayOfWeek().getValue();
 
-        for (int i = 0; i < 6; i++) {
+        int totalDays = dateOffset + monthMaxDate;
+        int totalWeeks = (int) Math.ceil(totalDays / 7.0);
+
+        for (int i = 0; i < totalWeeks; i++) {
             for (int j = 0; j < 7; j++) {
                 StackPane stackPane = new StackPane();
-
                 Rectangle rectangle = new Rectangle();
                 rectangle.setFill(Color.TRANSPARENT);
                 rectangle.setStroke(Color.BLACK);
                 rectangle.setStrokeWidth(strokeWidth);
-                double rectangleWidth =(calendarWidth/7) - strokeWidth - spacingH;
+
+                double rectangleWidth = (calendarWidth / 7) - strokeWidth - spacingH;
                 rectangle.setWidth(rectangleWidth);
-                double rectangleHeight = (calendarHeight/6) - strokeWidth - spacingV;
+
+                double rectangleHeight = (calendarHeight / totalWeeks) - strokeWidth - spacingV;
                 rectangle.setHeight(rectangleHeight);
                 stackPane.getChildren().add(rectangle);
 
-                int calculatedDate = (j+1)+(7*i);
-                if(calculatedDate > dateOffset){
+                int calculatedDate = (j + 1) + (7 * i);
+                if (calculatedDate > dateOffset) {
                     int currentDate = calculatedDate - dateOffset;
-                    if(currentDate <= monthMaxDate){
+                    if (currentDate <= monthMaxDate) {
                         Text date = new Text(String.valueOf(currentDate));
-                        double textTranslationY = - (rectangleHeight / 2) * 0.75;
+                        double textTranslationY = -(rectangleHeight / 2) * 0.75;
                         date.setTranslateY(textTranslationY);
                         stackPane.getChildren().add(date);
+
                         List<Tache> taches = tachesMap.get(currentDate);
-                        if(taches != null){
+                        if (taches != null) {
                             createCalendarTaches(taches, rectangleHeight, rectangleWidth, stackPane);
                         }
                     }
-                    if(today.getYear() == dateFocus.getYear() && today.getMonth() == dateFocus.getMonth() && today.getDayOfMonth() == currentDate){
+                    if (today.getYear() == dateFocus.getYear() && today.getMonth() == dateFocus.getMonth() && today.getDayOfMonth() == currentDate) {
                         rectangle.setStroke(Color.BLUE);
                     }
                 }
                 calendar.getChildren().add(stackPane);
             }
         }
+
     }
 
     private void createCalendarTaches(List<Tache> taches, double rectangleHeight, double rectangleWidth, StackPane stackPane) {
@@ -148,16 +154,8 @@ public class CalendarController implements Initializable {
 
         for (Tache tache: taches) {
             int tacheDate = tache.getDateLimite().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth();
-            if(!tachesMap.containsKey(tacheDate)){
-                tachesMap.put(tacheDate, List.of(tache));
-            } else {
-                List<Tache> OldListByDate = tachesMap.get(tacheDate);
-
-                List<Tache> newList = new ArrayList<>(OldListByDate);
-                newList.add(tache);
-                tachesMap.put(tacheDate, newList);
-            }
+            tachesMap.computeIfAbsent(tacheDate, k -> new ArrayList<>()).add(tache);
         }
-        return  tachesMap;
+        return tachesMap;
     }
 }
