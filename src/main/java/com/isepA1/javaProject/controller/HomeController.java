@@ -5,16 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javafx.scene.control.*;
 
+import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
+
 @Component
 public class HomeController {
+    public Hyperlink taskHyperLink;
     @FXML
     private Button logoutButton;
 
     @FXML
     private ListView<String> projectListView;
-
-    @FXML
-    private Hyperlink taskHyperlink;
 
     @Autowired
     private ProjetService projetService;
@@ -25,9 +25,9 @@ public class HomeController {
 
         projectListView.getItems().addAll(projetService.getAllProjectNames());
 
-        logoutButton.setOnAction(e -> System.out.println("Déconnecté !"));
+        logoutButton.setOnAction(e -> redirect(e,getClass(),"/com/isepA1/javaProject/loginView.fxml", "Login"));
 
-        taskHyperlink.setOnAction(e -> System.out.println("Lien cliqué !"));
+        taskHyperLink.setOnAction(e -> redirect(e,getClass(),"/com/isepA1/javaProject/calendrierView.fxml","Calendrier"));
     }
 }
 
