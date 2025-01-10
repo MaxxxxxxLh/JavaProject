@@ -21,7 +21,7 @@ public class JavaFXApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFXApplication.class.getResource("loginView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(JavaFXApplication.class.getResource("calendrierView.fxml"));
         fxmlLoader.setControllerFactory(getContext()::getBean);
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setTitle("Login");
