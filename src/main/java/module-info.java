@@ -13,6 +13,8 @@ module com.isepA1.javaProject {
     requires spring.boot.autoconfigure;
     requires spring.web;
     requires jakarta.validation;
+    requires spring.context.support;
+    requires jakarta.mail;
 
 
     opens com.isepA1.javaProject to javafx.fxml, spring.core, spring.beans, org.hibernate.orm.core;
