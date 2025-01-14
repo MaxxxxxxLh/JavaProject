@@ -1,14 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.ProjetView"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="374.0" layoutY="70.0" prefHeight="549.0" prefWidth="260.0">
+         <VBox alignment="TOP_CENTER" prefHeight="547.0" prefWidth="241.0" spacing="10.0">
+            <VBox alignment="TOP_CENTER" prefHeight="175.0" prefWidth="241.0" style="-fx-background-color: lightgray;">
+               <children>
+                  <Label text="Tâches à démarrer" />
+                  <ScrollPane fitToWidth="true" prefHeight="170.0">
+                     <content>
+                        <VBox fx:id="toStartTaskList" spacing="5.0" />
+                     </content>
+                  </ScrollPane>
+                  <Button mnemonicParsing="false" text="Ajouter une tâche" />
+               </children>
+            </VBox>
 
+            <VBox alignment="TOP_CENTER" prefHeight="175.0" prefWidth="260.0" style="-fx-background-color: lightyellow;">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="85.0" text="Tâches en cours" />
+                  <ScrollPane fitToWidth="true" prefHeight="170.0">
+                     <content>
+                        <VBox fx:id="inProgressTaskList" spacing="5.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="175.0" prefWidth="241.0" style="-fx-background-color: lightgreen;">
+               <children>
+                  <Label text="Tâches terminées" />
+                  <ScrollPane fitToWidth="true" prefHeight="170.0">
+                     <content>
+                        <VBox fx:id="completedTaskList" spacing="5.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </VBox>
+      </VBox>
+      <Label layoutX="304.0" layoutY="14.0" text="Projet">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="48.0" prefHeight="160.0" prefWidth="309.0">
+         <children>
+            <Label text="Description">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextArea prefHeight="243.0" prefWidth="309.0" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="19.0" layoutY="216.0" prefHeight="160.0" prefWidth="309.0">
+         <children>
+            <Label text="Vos fichiers">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <VBox fx:id="fileListContainer" prefHeight="53.0" prefWidth="309.0" spacing="5.0">
+               <Label fx:id="placeholderLabel" text="Aucun fichier déposé" />
+            </VBox>
+            <Label text="Glissez un fichier ici :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="dropArea" prefHeight="60.0" prefWidth="200.0" promptText="Glissez et déposez vos fichiers ici" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="19.0" layoutY="390.0" prefHeight="250.0" prefWidth="309.0" spacing="10.0">
+         <children>
+            <Label alignment="CENTER" text="Chat">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ScrollPane prefHeight="223.0" prefWidth="309.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="218.0" prefWidth="307.0">
+                     <children>
+                        <VBox fx:id="chatMessagesContainer" layoutX="10.0" layoutY="30.0" prefWidth="287.0" spacing="5.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+      <HBox layoutX="19.0" layoutY="620.0" prefHeight="50.0" prefWidth="309.0" spacing="10.0">
+         <children>
+            <TextField fx:id="chatInputField" prefWidth="230.0" promptText="Écrivez un message..." />
+            <Button fx:id="sendChatButton" text="Envoyer" />
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>
