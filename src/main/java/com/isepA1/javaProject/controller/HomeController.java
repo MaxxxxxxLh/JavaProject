@@ -9,7 +9,10 @@ import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
 
 @Component
 public class HomeController {
-    public Hyperlink taskHyperLink;
+    @FXML
+    private Hyperlink pageAdminLink;
+    @FXML
+    private Hyperlink taskHyperLink;
     @FXML
     private Button logoutButton;
 
@@ -28,6 +31,12 @@ public class HomeController {
         logoutButton.setOnAction(e -> redirect(e,getClass(),"/com/isepA1/javaProject/loginView.fxml", "Login"));
 
         taskHyperLink.setOnAction(e -> redirect(e,getClass(),"/com/isepA1/javaProject/calendrierView.fxml","Calendrier"));
+        if(LoginController.loggedEmployed.isAdmin()){
+            pageAdminLink.setOnAction(e -> redirect(e,getClass(),"/com/isepA1/javaProject/adminView.fxml","Page Admin"));
+        }else{
+            pageAdminLink.setText("");
+        }
+
     }
 }
 
