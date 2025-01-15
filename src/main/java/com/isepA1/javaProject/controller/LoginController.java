@@ -56,4 +56,10 @@ public class LoginController {
         //A implementer uniquement à la fin
         errorMessage.setText("Fonctionnalité de réinitialisation non implémentée pour le moment");
     }
+
+    @FXML
+    public void handleForgotPasswordButtonClick(ActionEvent event) {
+        redirect(event, getClass(), "/com/isepA1/javaProject/forgotPasswordView.fxml", "Mot de passe oublié");
+    }
+
 }
