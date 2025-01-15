@@ -1,6 +1,7 @@
 package com.isepA1.javaProject.controller;
 
 import com.isepA1.javaProject.model.postgres.Employe;
+import com.isepA1.javaProject.service.EmailService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -21,7 +22,8 @@ public class SignUpController {
 
     @Autowired
     private EmployeService employeService;
-
+    @Autowired
+    private NotificationController notificationController;
     @FXML
     private TextField prenom;
     @FXML
@@ -59,7 +61,9 @@ public class SignUpController {
         }else{
                 if(employeService.getAllEmployes().stream().noneMatch(employe -> employe.getEmail().equals(newEmail))){
                     try{
-                        employeService.saveEmploye(new Employe(newPrenom,newNom,newEmail,newPassword));
+                        Employe newEmploye = new Employe(newPrenom,newNom,newEmail,newPassword);
+                        employeService.saveEmploye(newEmploye);
+                        notificationController.sendSignUpConfirmation(newEmploye);
                         System.out.println("Utilisateur créé avec succès !");
                         redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "Home Page");
                     }catch(Error error){

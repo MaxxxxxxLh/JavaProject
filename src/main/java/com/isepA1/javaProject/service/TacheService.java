@@ -6,6 +6,7 @@ import com.isepA1.javaProject.repository.TacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +52,9 @@ public class TacheService {
 
     public List<Tache> getTachesByEtat(Etat etat) {
         return tacheRepository.findByEtat(etat);
+    }
+
+    public List<Tache> findTacheByDateLimite(Date dateLimite) {
+        return tacheRepository.findByDateLimite(dateLimite);
     }
 }
