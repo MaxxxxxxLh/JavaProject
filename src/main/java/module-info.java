@@ -26,4 +26,6 @@ module com.isepA1.javaProject {
     exports com.isepA1.javaProject.config to spring.beans;
     exports com.isepA1.javaProject.service to spring.beans;
     exports com.isepA1.javaProject;
+    exports com.isepA1.javaProject.api to spring.beans;
+    opens com.isepA1.javaProject.api to javafx.fxml, spring.core;
 }
