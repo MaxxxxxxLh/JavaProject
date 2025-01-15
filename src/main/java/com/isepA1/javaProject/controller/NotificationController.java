@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class TacheNotificationSchedulerController {
+public class NotificationController {
 
     @Autowired
     private TacheService taskService;
@@ -31,10 +31,17 @@ public class TacheNotificationSchedulerController {
         for (Tache tache : tasksDueTomorrow) {
             for (Employe employe : tache.getProjet().getMembres()) {
                 String subject = "Rappel: Tache à finir demain";
-                String body = String.format("Cher %s,\n\nLa tache '%s' est à finir demain.\n\nCordialement,\nLMAN App Team",
-                        employe.getNom(), tache.getNom());
+                String body = String.format("Cher %s %s,\n\nLa tache '%s' est à finir demain.\n\nCordialement,\nLMAN App Team",
+                        employe.getPrenom(), employe.getNom(), tache.getNom());
                 emailService.sendEmail(employe.getEmail(), subject, body);
             }
         }
+    }
+
+    public void sendSignUpConfirmation(Employe employe){
+        String subject = "Inscription à LMAN";
+        String body = String.format("Cher %s %s,\n\nBienvenue sur notre application de gestion de projet LMAN.\n Votre compte a bien été créé.\n\nCordialement,\nLMAN App Team",
+                employe.getPrenom(), employe.getNom());
+        emailService.sendEmail(employe.getEmail(), subject, body);
     }
 }
