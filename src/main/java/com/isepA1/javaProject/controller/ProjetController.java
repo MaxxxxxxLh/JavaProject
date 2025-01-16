@@ -20,6 +20,7 @@ import com.isepA1.javaProject.service.ProjetService;
 import java.io.IOException;
 
 import static com.isepA1.javaProject.JavaFXApplication.getContext;
+import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
 
 @Controller
 public class ProjetController {
