@@ -36,9 +36,6 @@
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="LOGIN" />
             <Label fx:id="errorMessage" textFill="RED" />
 
-            <!-- Nouveau bouton pour "Mot de passe oublié" -->
-            <Button fx:id="forgotPasswordButton" mnemonicParsing="false" onAction="#handleForgotPasswordButtonClick" text="Mot de passe oublié" />
-
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <VBox.margin>
                   <Insets top="50.0" />
