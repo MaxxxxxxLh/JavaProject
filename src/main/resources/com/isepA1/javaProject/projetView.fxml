@@ -5,12 +5,13 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.isepA1.javaProject.controller.ProjetController">
    <children>
       <VBox layoutX="374.0" layoutY="70.0" prefHeight="549.0" prefWidth="260.0">
          <VBox alignment="TOP_CENTER" prefHeight="547.0" prefWidth="241.0" spacing="10.0">
@@ -22,7 +23,7 @@
                         <VBox fx:id="toStartTaskList" spacing="5.0" />
                      </content>
                   </ScrollPane>
-                  <Button mnemonicParsing="false" text="Ajouter une tâche" />
+                  <Button fx:id="addTaskButton" mnemonicParsing="false" onAction="#addTask" text="Ajouter une tâche" />
                </children>
             </VBox>
 
@@ -60,7 +61,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextArea prefHeight="243.0" prefWidth="309.0" />
+            <TextArea fx:id="projectDescription" prefHeight="243.0" prefWidth="309.0" promptText="Description du projet" />
          </children>
       </VBox>
       <VBox alignment="TOP_CENTER" layoutX="19.0" layoutY="216.0" prefHeight="160.0" prefWidth="309.0">
@@ -71,7 +72,9 @@
                </font>
             </Label>
             <VBox fx:id="fileListContainer" prefHeight="53.0" prefWidth="309.0" spacing="5.0">
-               <Label fx:id="placeholderLabel" text="Aucun fichier déposé" />
+               <children>
+                  <ImageView fitHeight="53.0" fitWidth="305.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
             </VBox>
             <Label text="Glissez un fichier ici :">
                <font>
@@ -102,7 +105,7 @@
       <HBox layoutX="19.0" layoutY="620.0" prefHeight="50.0" prefWidth="309.0" spacing="10.0">
          <children>
             <TextField fx:id="chatInputField" prefWidth="230.0" promptText="Écrivez un message..." />
-            <Button fx:id="sendChatButton" text="Envoyer" />
+            <Button fx:id="sendChatButton" onAction="#sendMessage" text="Envoyer" />
          </children>
       </HBox>
    </children>
