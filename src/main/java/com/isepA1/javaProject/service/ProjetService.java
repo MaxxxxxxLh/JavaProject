@@ -16,7 +16,6 @@ public class ProjetService {
     @Autowired
     private final ProjetRepository projetRepository;
 
-
     public ProjetService(ProjetRepository projetRepository) {
         this.projetRepository = projetRepository;
     }
@@ -37,15 +36,23 @@ public class ProjetService {
         projet.getMembres().add(employe);
         projetRepository.save(projet);
     }
-    public List<String> getAllProjectNames() {
-        List<Projet> projets = projetRepository.findAll();
 
+    public List<String> getProjectNamesByEmployeId(long employeId) {
+        List<Projet> projets = projetRepository.findAll();
         List<String> projectNames = new ArrayList<>();
         for (Projet projet : projets) {
-            projectNames.add(projet.getNom());
+            if (projet.getMembres().stream().anyMatch(e -> e.getId() == employeId)) {
+                projectNames.add(projet.getNom());
+            }
         }
-
         return projectNames;
     }
 
+    public Projet getProjetByNom(String nom) {
+        return projetRepository.findAll()
+                .stream()
+                .filter(projet -> projet.getNom().equalsIgnoreCase(nom))
+                .findFirst()
+                .orElse(null);
+    }
 }
