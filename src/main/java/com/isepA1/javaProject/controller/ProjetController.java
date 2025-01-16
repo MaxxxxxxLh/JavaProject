@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import java.io.IOException;
 
 import static com.isepA1.javaProject.JavaFXApplication.getContext;
+import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
 
 @Controller
 public class ProjetController {
@@ -153,30 +154,40 @@ public class ProjetController {
         }
     }
 
-    @FXML
-    private void addTask() {
-        // Créer la nouvelle HBox pour la tâche
-        HBox taskBox = new HBox(10);  // Espacement de 10px entre les éléments
+    public void addTask() {
+        // Créer une HBox pour la tâche
+        HBox taskBox = createTaskBox();
 
-        // Créer la CheckBox et la Label pour la tâche
+        // Ajouter la tâche au conteneur
+        toStartTaskList.getChildren().add(taskBox);
+    }
+
+    private HBox createTaskBox() {
+        // Créer la HBox avec un espacement
+        HBox taskBox = new HBox(10);
+
+        // Créer les éléments pour la tâche
         CheckBox taskCheckBox = new CheckBox();
         Label taskLabel = new Label("Tâche");
 
-        // Ajouter un événement pour envoyer sur tâche
-        taskLabel.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                redirecttoTache(event, getClass(), "/com/isepA1/javaProject/projetView.fxml", "Tâche");
-            }
-        });
+        // Configurer l'événement de clic pour le label
+        configureLabelClickEvent(taskLabel);
 
-        // Ajouter la CheckBox et la Label à l'HBox
+        // Ajouter les éléments à la HBox
         taskBox.getChildren().addAll(taskCheckBox, taskLabel);
 
-        // Ajouter l'HBox à la VBox des tâches à démarrer (toStartTaskList)
-        toStartTaskList.getChildren().add(taskBox);
+        return taskBox;
+    }
+
+    private void configureLabelClickEvent(Label taskLabel) {
+        taskLabel.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                redirecttache(event, getClass(), "/com/isepA1/javaProject/tacheView.fxml", "Tâche");
+            }
+        });
     }
     @FXML
-    public static void redirecttoTache(MouseEvent event, Class c, String fxmlPath, String title) {
+    public static void redirecttache(MouseEvent event, Class c, String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(c.getResource(fxmlPath));
             loader.setControllerFactory(getContext()::getBean);
@@ -185,8 +196,7 @@ public class ProjetController {
             stage.setScene(new Scene(root));
             stage.setTitle(title);
             stage.show();
-        } catch (
-        IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de " + fxmlPath);
         }
