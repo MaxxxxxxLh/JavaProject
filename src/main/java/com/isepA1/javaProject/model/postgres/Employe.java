@@ -14,16 +14,18 @@ public class Employe {
     private String prenom;
     private String email;
     private String password;
+    private boolean isAdmin;
 
     @ManyToMany(mappedBy = "membres")
     private List<Projet> historiqueProjets;
     public Employe(){}
-    public Employe(String nom, String prenom, String email, String password){
+    public Employe(String nom, String prenom, String email, String password, boolean isAdmin){
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.historiqueProjets = new ArrayList<>();
+        this.isAdmin = isAdmin;
     }
     // Getters et setters
 
@@ -67,5 +69,13 @@ public class Employe {
 
     public void setHistoriqueProjets(List<Projet> historiqueProjets) {
         this.historiqueProjets = historiqueProjets;
+    }
+
+    public boolean isAdmin() {
+        return this.isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.isAdmin = admin;
     }
 }

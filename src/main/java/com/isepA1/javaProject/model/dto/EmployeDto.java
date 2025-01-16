@@ -20,16 +20,18 @@ public class EmployeDto {
     @NotNull
     @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères")
     private String password;
+    private boolean isAdmin;
     private List<ProjetDto> historiqueProjets;
 
 
-    public EmployeDto(long id, String nom, String prenom, String email, String password) {
+    public EmployeDto(long id, String nom, String prenom, String email, String password, boolean isAdmin) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.historiqueProjets = new ArrayList<>();
+        this.isAdmin = isAdmin;
     }
 
     // Getters et setters
@@ -79,5 +81,13 @@ public class EmployeDto {
 
     public void setHistoriqueProjets(List<ProjetDto> historiqueProjets) {
         this.historiqueProjets = historiqueProjets;
+    }
+
+    public boolean isAdmin() {
+        return this.isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.isAdmin = admin;
     }
 }

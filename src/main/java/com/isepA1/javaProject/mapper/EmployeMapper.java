@@ -12,7 +12,8 @@ public class EmployeMapper {
                 employe.getNom(),
                 employe.getPrenom(),
                 employe.getEmail(),
-                employe.getPassword()
+                employe.getPassword(),
+                employe.isAdmin()
         );
     }
 
@@ -21,7 +22,8 @@ public class EmployeMapper {
                 dto.getNom(),
                 dto.getPrenom(),
                 dto.getEmail(),
-                dto.getPassword()
+                dto.getPassword(),
+                dto.isAdmin()
         );
     }
 }

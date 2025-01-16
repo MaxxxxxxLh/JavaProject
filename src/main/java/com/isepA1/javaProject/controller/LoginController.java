@@ -17,7 +17,6 @@ public class LoginController {
     private EmployeService employeService;
     @FXML
     private TextField emailField;
-
     @FXML
     private PasswordField passwordField;
     @FXML
@@ -30,6 +29,7 @@ public class LoginController {
     private Hyperlink forgotPasswordLink;
     @FXML
     private Label errorMessage;
+    public static Employe loggedEmployed;
     @FXML
     public void handleLoginButtonClick(ActionEvent event) {
         try {
@@ -37,6 +37,7 @@ public class LoginController {
             String password = passwordField.getText();
             Employe employe1 = employeService.getAllEmployes().stream().filter(employe -> employe.getEmail().equals(email)).findFirst().orElse(null);
             if (employe1 != null && employeService.verifyPassword(password, employe1.getPassword())) {
+                loggedEmployed = employe1;
                 redirect(event, getClass(),"/com/isepA1/javaProject/homeView.fxml", "Home Page");
             } else {
                 errorMessage.setText("Adresse mail ou mot de passe incorrect");
