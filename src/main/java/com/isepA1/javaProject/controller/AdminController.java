@@ -37,31 +37,6 @@ public class AdminController {
 
     @FXML
     private void addAdmin(ActionEvent event) {
-        nonUsersAdminList.getItems().setAll(
-                employeService.getAllEmployes()
-                        .stream()
-                        .filter(employe -> !employe.isAdmin())
-                        .map(Employe::getNom)
-                        .toList()
-        );
-    }
-
-    @FXML
-    private void createProject(ActionEvent event) {
-    }
-
-    @FXML
-    private void deleteUser(ActionEvent event) {
-        usersList.getItems().setAll(
-                employeService.getAllEmployes()
-                        .stream()
-                        .map(Employe::getNom)
-                        .toList()
-        );
-    }
-
-    @FXML
-    private void handleNonUserClick(ActionEvent event) {
         String selectedName = nonUsersAdminList.getSelectionModel().getSelectedItem();
         if (selectedName != null) {
             Employe employe = employeService.getAllEmployes()
@@ -79,23 +54,27 @@ public class AdminController {
     }
 
     @FXML
-    private void handleUserDoubleClick(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            String selectedName = usersList.getSelectionModel().getSelectedItem();
-            if (selectedName != null) {
-                Employe employe = employeService.getAllEmployes()
-                        .stream()
-                        .filter(e -> e.getNom().equals(selectedName))
-                        .findFirst()
-                        .orElse(null);
+    private void createProject(ActionEvent event) {
+    }
 
-                if (employe != null) {
-                    employeService.deleteEmploye(employe.getId());
-                    refreshLists();
-                }
+    @FXML
+    private void deleteUser(ActionEvent event) {
+        String selectedName = usersList.getSelectionModel().getSelectedItem();
+        if (selectedName != null) {
+            Employe employe = employeService.getAllEmployes()
+                    .stream()
+                    .filter(e -> e.getNom().equals(selectedName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (employe != null) {
+                employeService.deleteEmploye(employe.getId());
+                refreshLists();
             }
         }
     }
+
+
 
     private void refreshLists() {
         nonUsersAdminList.getItems().setAll(
