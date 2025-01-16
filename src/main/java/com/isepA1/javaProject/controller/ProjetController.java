@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.isepA1.javaProject.JavaFXApplication.getContext;
+import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
 
 @Controller
 public class ProjetController {
@@ -60,7 +61,7 @@ public class ProjetController {
     @FXML
     private Button sendChatButton;
     private Projet projet;
-
+    /*
     public void initializeWithProjetId(long projetId) {
         projet = projetService.getProjetById(projetId).orElse(null);
         if (projet != null) {
@@ -68,7 +69,7 @@ public class ProjetController {
             projectDescription.setText("Détails du projet : " + projet.getNom());
         }
         setupTaskDragAndDrop();
-    }
+    *}/
 
     private void setupTaskDragAndDrop() {
         VBox[] taskStates = {toStartTaskList, inProgressTaskList, completedTaskList};
@@ -96,7 +97,7 @@ public class ProjetController {
                 event.consume();
             });
         }
-    }
+    }*/
 
     public void addTask() {
         Tache tache = new Tache("",new Date(), projet);
@@ -166,5 +167,11 @@ public class ProjetController {
             chatMessagesContainer.getChildren().add(messageLabel);
             chatInputField.clear();
         }
+    }
+    @FXML
+    private Button BacktoHome;
+    @FXML
+    private void RetourButton(ActionEvent event){
+        redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "home page");
     }
 }
