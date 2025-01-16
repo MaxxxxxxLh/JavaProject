@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Controller;
 
 import java.util.Arrays;
-
+@Controller
 public class TacheController {
 
     @FXML
