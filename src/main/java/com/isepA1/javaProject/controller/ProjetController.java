@@ -1,14 +1,23 @@
 package com.isepA1.javaProject.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import org.springframework.stereotype.Controller;
 
+import java.io.IOException;
+
+import static com.isepA1.javaProject.JavaFXApplication.getContext;
+
+@Controller
 public class ProjetController {
 
     @FXML
@@ -33,6 +42,9 @@ public class ProjetController {
     private VBox chatMessagesContainer;
 
     @FXML
+    private Button addTaskButton;
+
+    @FXML
     private TextArea dropArea;
 
     @FXML
@@ -43,14 +55,15 @@ public class ProjetController {
 
     private boolean isAdmin = true; // Simule si l'utilisateur est un patron
 
-    @FXML
+
+    /*@FXML
     public void initialize() {
         setupEditableLabel(projectTitle, isAdmin);
         setupEditableTextArea(projectDescription, isAdmin);
         setupFileDropArea();
         sendChatButton.setOnAction(event -> sendMessage());
         setupTaskDragAndDrop();
-    }
+    }*/
 
     private void setupEditableLabel(Label label, boolean editable) {
         if (editable) {
@@ -70,11 +83,20 @@ public class ProjetController {
     private void setupEditableTextArea(TextArea textArea, boolean editable) {
         textArea.setEditable(editable);
     }
+    @FXML
+    private void handleDragOver(DragEvent event){
+            if ( event.getDragboard().hasFiles()) {
+                event.acceptTransferModes(TransferMode.ANY);
+            }
+    }
+    @FXML
+    private void handleDrop(DragEvent event){
 
-    private void setupFileDropArea() {
+    }
+    /*private void setupFileDropArea() {
         dropArea.setOnDragOver(event -> {
             if (event.getGestureSource() != dropArea && event.getDragboard().hasFiles()) {
-                event.acceptTransferModes(TransferMode.COPY);
+                event.acceptTransferModes(TransferMode.ANY);
             }
             event.consume();
         });
@@ -93,8 +115,8 @@ public class ProjetController {
             }
             event.consume();
         });
-    }
-
+    }*/
+    @FXML
     private void sendMessage() {
         String message = chatInputField.getText().trim();
         if (!message.isEmpty()) {
@@ -133,38 +155,41 @@ public class ProjetController {
 
     @FXML
     private void addTask() {
-        HBox taskBox = new HBox(10);
+        // Créer la nouvelle HBox pour la tâche
+        HBox taskBox = new HBox(10);  // Espacement de 10px entre les éléments
+
+        // Créer la CheckBox et la Label pour la tâche
         CheckBox taskCheckBox = new CheckBox();
         Label taskLabel = new Label("Tâche");
 
+        // Ajouter un événement pour envoyer sur tâche
         taskLabel.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                TextField textField = new TextField(taskLabel.getText());
-                textField.setOnAction(e -> {
-                    taskLabel.setText(textField.getText().isEmpty() ? "Tâche" : textField.getText());
-                    ((HBox) taskLabel.getParent()).getChildren().set(1, taskLabel);
-                });
-                textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!newValue) {
-                        taskLabel.setText(textField.getText().isEmpty() ? "Tâche" : textField.getText());
-                        ((HBox) taskLabel.getParent()).getChildren().set(1, taskLabel);
-                    }
-                });
-                ((HBox) taskLabel.getParent()).getChildren().set(1, textField);
-                textField.requestFocus();
+                redirecttoTache(event, getClass(), "/com/isepA1/javaProject/projetView.fxml", "Tâche");
             }
         });
 
+        // Ajouter la CheckBox et la Label à l'HBox
         taskBox.getChildren().addAll(taskCheckBox, taskLabel);
-        taskBox.setOnDragDetected(event -> {
-            Dragboard db = taskBox.startDragAndDrop(TransferMode.MOVE);
-            ClipboardContent content = new ClipboardContent();
-            content.putString(taskLabel.getText());
-            db.setContent(content);
-            event.consume();
-        });
 
+        // Ajouter l'HBox à la VBox des tâches à démarrer (toStartTaskList)
         toStartTaskList.getChildren().add(taskBox);
+    }
+    @FXML
+    public static void redirecttoTache(MouseEvent event, Class c, String fxmlPath, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(c.getResource(fxmlPath));
+            loader.setControllerFactory(getContext()::getBean);
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle(title);
+            stage.show();
+        } catch (
+        IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de " + fxmlPath);
+        }
     }
 }
 
