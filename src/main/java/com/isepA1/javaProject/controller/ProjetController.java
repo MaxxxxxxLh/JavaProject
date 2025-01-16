@@ -181,7 +181,7 @@ public class ProjetController {
 
     private void configureLabelClickEvent(Label taskLabel) {
         taskLabel.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 1) {
+            if (event.getClickCount() == 2) {
                 redirecttache(event, getClass(), "/com/isepA1/javaProject/tacheView.fxml", "Tâche");
             }
         });

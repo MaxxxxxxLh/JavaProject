@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.isepA1.javaProject.controller.ProjetController">   <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.isepA1.javaProject.controller.ProjetController">   <children>
       <VBox layoutX="374.0" layoutY="70.0" prefHeight="549.0" prefWidth="260.0">
          <VBox alignment="TOP_CENTER" prefHeight="547.0" prefWidth="241.0" spacing="10.0">
             <VBox alignment="TOP_CENTER" prefHeight="175.0" prefWidth="241.0" style="-fx-background-color: lightgray;">
@@ -22,7 +22,7 @@
                         <VBox fx:id="toStartTaskList" spacing="5.0" />
                      </content>
                   </ScrollPane>
-                  <Button fx:id="addTaskButton" mnemonicParsing="false" text="Ajouter une tâche" onAction="#addTask" />
+                  <Button fx:id="addTaskButton" mnemonicParsing="false" onAction="#addTask" text="Ajouter une tâche" />
                </children>
             </VBox>
 
@@ -104,7 +104,7 @@
       <HBox layoutX="19.0" layoutY="620.0" prefHeight="50.0" prefWidth="309.0" spacing="10.0">
          <children>
             <TextField fx:id="chatInputField" prefWidth="230.0" promptText="Écrivez un message..." />
-            <Button fx:id="sendChatButton" text="Envoyer" onAction="#sendMessage" />
+            <Button fx:id="sendChatButton" onAction="#sendMessage" text="Envoyer" />
          </children>
       </HBox>
    </children>
