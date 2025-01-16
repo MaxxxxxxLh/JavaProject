@@ -108,5 +108,6 @@
             <Button fx:id="sendChatButton" onAction="#sendMessage" text="Envoyer" />
          </children>
       </HBox>
+      <Button fx:id="BacktoHome" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#RetourButton" text="Retour" />
    </children>
 </AnchorPane>
