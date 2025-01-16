@@ -64,6 +64,55 @@ public class ProjetController {
     private Button homePage;
     private Projet projet;
 
+
+    @FXML
+    private TextField projectTitleInput;
+
+
+    @FXML
+    private void enableEditing(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            projectTitleInput.setText(projectTitle.getText());
+            projectTitle.setVisible(false);
+            projectTitleInput.setVisible(true);
+            projectTitleInput.requestFocus();
+        }
+    }
+
+
+    @FXML
+    private void saveProjectTitle(ActionEvent event) {
+        String newTitle = projectTitleInput.getText().trim();
+
+        if (!newTitle.isEmpty()) {
+            projectTitle.setText(newTitle);
+
+        }
+
+        switchToViewMode();
+    }
+
+
+    @FXML
+    private void handleKeyPress(KeyEvent event) {
+        switch (event.getCode()) {
+            case ENTER:
+                saveProjectTitle(null);
+                break;
+            case ESCAPE:
+                switchToViewMode();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void switchToViewMode() {
+        projectTitleInput.setVisible(false);
+        projectTitle.setVisible(true);
+    }
+
     public void initializeWithProjetId(long projetId) {
         projet = projetService.getProjetById(projetId).orElse(new Projet("Nouveau Projet",new Date()));
         if (projetService.getProjetById(projetId).isEmpty()){

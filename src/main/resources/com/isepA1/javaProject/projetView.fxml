@@ -49,11 +49,17 @@
             </VBox>
          </VBox>
       </VBox>
-      <Label fx:id="projectTitle" layoutX="304.0" layoutY="14.0" text="Projet">
+      <Label fx:id="projectTitle" layoutX="304.0" layoutY="14.0" text="Projet" onMouseClicked="#enableEditing">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <TextField fx:id="projectTitleInput" layoutX="304.0" layoutY="14.0" text="Projet" visible="false" onAction="#saveProjectTitle" onKeyPressed="#handleKeyPress">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="48.0" prefHeight="160.0" prefWidth="309.0">
          <children>
             <Label text="Description">
