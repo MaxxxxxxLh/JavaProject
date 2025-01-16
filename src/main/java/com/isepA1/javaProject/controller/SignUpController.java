@@ -61,10 +61,11 @@ public class SignUpController {
         }else{
                 if(employeService.getAllEmployes().stream().noneMatch(employe -> employe.getEmail().equals(newEmail))){
                     try{
-                        Employe newEmploye = new Employe(newPrenom,newNom,newEmail,newPassword);
+                        Employe newEmploye = new Employe(newPrenom,newNom,newEmail,newPassword, false);
                         employeService.saveEmploye(newEmploye);
                         notificationController.sendSignUpConfirmation(newEmploye);
                         System.out.println("Utilisateur créé avec succès !");
+                        LoginController.loggedEmployed = newEmploye;
                         redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "Home Page");
                     }catch(Error error){
                         System.out.println(error.getMessage());
