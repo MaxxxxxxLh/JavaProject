@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.isepA1.javaProject.controller.ProjetController">   <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.isepA1.javaProject.controller.ProjetController">
+   <children>
       <VBox layoutX="374.0" layoutY="70.0" prefHeight="549.0" prefWidth="260.0">
          <VBox alignment="TOP_CENTER" prefHeight="547.0" prefWidth="241.0" spacing="10.0">
             <VBox alignment="TOP_CENTER" prefHeight="175.0" prefWidth="241.0" style="-fx-background-color: lightgray;">
@@ -60,7 +61,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextArea prefHeight="243.0" prefWidth="309.0" />
+            <TextArea fx:id="projectDescription" prefHeight="243.0" prefWidth="309.0" promptText="Description du projet" />
          </children>
       </VBox>
       <VBox alignment="TOP_CENTER" layoutX="19.0" layoutY="216.0" prefHeight="160.0" prefWidth="309.0">

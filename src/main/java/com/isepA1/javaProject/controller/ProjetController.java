@@ -11,15 +11,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import com.isepA1.javaProject.model.postgres.Projet;
+import com.isepA1.javaProject.service.ProjetService;
 
 import java.io.IOException;
 
 import static com.isepA1.javaProject.JavaFXApplication.getContext;
-import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
 
 @Controller
 public class ProjetController {
+
+    @Autowired
+    private ProjetService projetService;
 
     @FXML
     private Label projectTitle;
@@ -46,86 +52,18 @@ public class ProjetController {
     private Button addTaskButton;
 
     @FXML
-    private TextArea dropArea;
-
-    @FXML
     private TextField chatInputField;
 
     @FXML
     private Button sendChatButton;
 
-    private boolean isAdmin = true; // Simule si l'utilisateur est un patron
-
-
-    /*@FXML
-    public void initialize() {
-        setupEditableLabel(projectTitle, isAdmin);
-        setupEditableTextArea(projectDescription, isAdmin);
-        setupFileDropArea();
-        sendChatButton.setOnAction(event -> sendMessage());
+    public void initializeWithProjetId(long projetId) {
+        Projet projet = projetService.getProjetById(projetId).orElse(null);
+        if (projet != null) {
+            projectTitle.setText(projet.getNom());
+            projectDescription.setText("Détails du projet : " + projet.getNom());
+        }
         setupTaskDragAndDrop();
-    }*/
-
-    private void setupEditableLabel(Label label, boolean editable) {
-        if (editable) {
-            label.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    TextField textField = new TextField(label.getText());
-                    textField.setOnAction(e -> {
-                        label.setText(textField.getText());
-                        ((VBox) label.getParent()).getChildren().set(0, label);
-                    });
-                    ((VBox) label.getParent()).getChildren().set(0, textField);
-                }
-            });
-        }
-    }
-
-    private void setupEditableTextArea(TextArea textArea, boolean editable) {
-        textArea.setEditable(editable);
-    }
-    @FXML
-    private void handleDragOver(DragEvent event){
-            if ( event.getDragboard().hasFiles()) {
-                event.acceptTransferModes(TransferMode.ANY);
-            }
-    }
-    @FXML
-    private void handleDrop(DragEvent event){
-
-    }
-    /*private void setupFileDropArea() {
-        dropArea.setOnDragOver(event -> {
-            if (event.getGestureSource() != dropArea && event.getDragboard().hasFiles()) {
-                event.acceptTransferModes(TransferMode.ANY);
-            }
-            event.consume();
-        });
-
-        dropArea.setOnDragDropped(event -> {
-            Dragboard db = event.getDragboard();
-            if (db.hasFiles()) {
-                db.getFiles().forEach(file -> {
-                    Label fileLabel = new Label(file.getName());
-                    fileListContainer.getChildren().add(fileLabel);
-                });
-                dropArea.clear();
-                event.setDropCompleted(true);
-            } else {
-                event.setDropCompleted(false);
-            }
-            event.consume();
-        });
-    }*/
-    @FXML
-    private void sendMessage() {
-        String message = chatInputField.getText().trim();
-        if (!message.isEmpty()) {
-            Label messageLabel = new Label(message);
-            messageLabel.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 15;");
-            chatMessagesContainer.getChildren().add(messageLabel);
-            chatInputField.clear();
-        }
     }
 
     private void setupTaskDragAndDrop() {
@@ -143,7 +81,9 @@ public class ProjetController {
                 Dragboard db = event.getDragboard();
                 if (db.hasString()) {
                     Node draggedTask = (Node) event.getGestureSource();
-                    ((VBox) draggedTask.getParent()).getChildren().remove(draggedTask);
+                    if (draggedTask.getParent() instanceof VBox) {
+                        ((VBox) draggedTask.getParent()).getChildren().remove(draggedTask);
+                    }
                     taskState.getChildren().add(draggedTask);
                     event.setDropCompleted(true);
                 } else {
@@ -155,50 +95,66 @@ public class ProjetController {
     }
 
     public void addTask() {
-        // Créer une HBox pour la tâche
         HBox taskBox = createTaskBox();
-
-        // Ajouter la tâche au conteneur
         toStartTaskList.getChildren().add(taskBox);
     }
 
     private HBox createTaskBox() {
-        // Créer la HBox avec un espacement
         HBox taskBox = new HBox(10);
-
-        // Créer les éléments pour la tâche
         CheckBox taskCheckBox = new CheckBox();
-        Label taskLabel = new Label("Tâche");
+        Label taskLabel = new Label("Nouvelle Tâche");
 
-        // Configurer l'événement de clic pour le label
+        // Ajouter un ID unique à chaque tâche
+        taskBox.setId("task-" + System.currentTimeMillis());
+
+        configureTaskDragAndDrop(taskBox);
         configureLabelClickEvent(taskLabel);
 
-        // Ajouter les éléments à la HBox
         taskBox.getChildren().addAll(taskCheckBox, taskLabel);
 
         return taskBox;
     }
 
+    private void configureTaskDragAndDrop(HBox taskBox) {
+        taskBox.setOnDragDetected(event -> {
+            Dragboard db = taskBox.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.putString(taskBox.getId());
+            db.setContent(content);
+            event.consume();
+        });
+    }
+
     private void configureLabelClickEvent(Label taskLabel) {
         taskLabel.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                redirecttache(event, getClass(), "/com/isepA1/javaProject/tacheView.fxml", "Tâche");
+                redirectToTaskView(event);
             }
         });
     }
-    @FXML
-    public static void redirecttache(MouseEvent event, Class c, String fxmlPath, String title) {
+
+    private void redirectToTaskView(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(c.getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/isepA1/javaProject/tacheView.fxml"));
             loader.setControllerFactory(getContext()::getBean);
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle(title);
+            stage.setTitle("Tâche");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Erreur lors du chargement de " + fxmlPath);
+        }
+    }
+
+    @FXML
+    private void sendMessage() {
+        String message = chatInputField.getText().trim();
+        if (!message.isEmpty()) {
+            Label messageLabel = new Label(message);
+            messageLabel.setStyle("-fx-background-color: lightblue; -fx-text-fill: black; -fx-padding: 5; -fx-background-radius: 5;");
+            chatMessagesContainer.getChildren().add(messageLabel);
+            chatInputField.clear();
         }
     }
 
@@ -207,4 +163,3 @@ public class ProjetController {
         redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "home page");
     }
 }
-
