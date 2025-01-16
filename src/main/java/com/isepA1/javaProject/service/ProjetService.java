@@ -2,6 +2,7 @@ package com.isepA1.javaProject.service;
 
 import com.isepA1.javaProject.model.postgres.Projet;
 import com.isepA1.javaProject.model.postgres.Employe;
+import com.isepA1.javaProject.model.postgres.Tache;
 import com.isepA1.javaProject.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,11 @@ public class ProjetService {
                 .filter(projet -> projet.getNom().equalsIgnoreCase(nom))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void addTacheToProjet(Projet projet, Tache tache) {
+        projet.getListeTaches().add(tache);
+        projetRepository.save(projet);
+
     }
 }

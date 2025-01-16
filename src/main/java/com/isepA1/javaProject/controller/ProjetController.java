@@ -1,5 +1,6 @@
 package com.isepA1.javaProject.controller;
 
+import com.isepA1.javaProject.model.postgres.Tache;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,8 @@ import com.isepA1.javaProject.model.postgres.Projet;
 import com.isepA1.javaProject.service.ProjetService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import static com.isepA1.javaProject.JavaFXApplication.getContext;
 
@@ -56,9 +59,10 @@ public class ProjetController {
 
     @FXML
     private Button sendChatButton;
+    private Projet projet;
 
     public void initializeWithProjetId(long projetId) {
-        Projet projet = projetService.getProjetById(projetId).orElse(null);
+        projet = projetService.getProjetById(projetId).orElse(null);
         if (projet != null) {
             projectTitle.setText(projet.getNom());
             projectDescription.setText("Détails du projet : " + projet.getNom());
@@ -95,20 +99,22 @@ public class ProjetController {
     }
 
     public void addTask() {
-        HBox taskBox = createTaskBox();
+        Tache tache = new Tache("",new Date(), projet);
+        projetService.addTacheToProjet(projet, tache);
+        projet.getListeTaches().add(tache);
+        HBox taskBox = createTaskBox(tache.getId());
         toStartTaskList.getChildren().add(taskBox);
     }
 
-    private HBox createTaskBox() {
+    private HBox createTaskBox(long id) {
         HBox taskBox = new HBox(10);
         CheckBox taskCheckBox = new CheckBox();
         Label taskLabel = new Label("Nouvelle Tâche");
 
-        // Ajouter un ID unique à chaque tâche
         taskBox.setId("task-" + System.currentTimeMillis());
 
         configureTaskDragAndDrop(taskBox);
-        configureLabelClickEvent(taskLabel);
+        configureLabelClickEvent(taskLabel, id);
 
         taskBox.getChildren().addAll(taskCheckBox, taskLabel);
 
@@ -125,19 +131,23 @@ public class ProjetController {
         });
     }
 
-    private void configureLabelClickEvent(Label taskLabel) {
+    private void configureLabelClickEvent(Label taskLabel, long id) {
         taskLabel.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                redirectToTaskView(event);
+                redirectToTaskView(event, id);
             }
         });
     }
 
-    private void redirectToTaskView(MouseEvent event) {
+    private void redirectToTaskView(MouseEvent event, long id) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/isepA1/javaProject/tacheView.fxml"));
             loader.setControllerFactory(getContext()::getBean);
             Parent root = loader.load();
+
+            TacheController tacheController = loader.getController();
+            tacheController.loadTache(id);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Tâche");
