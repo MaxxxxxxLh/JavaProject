@@ -201,5 +201,10 @@ public class ProjetController {
             System.err.println("Erreur lors du chargement de " + fxmlPath);
         }
     }
+
+    @FXML
+    private void RetourButton(ActionEvent event){
+        redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "home page");
+    }
 }
 
