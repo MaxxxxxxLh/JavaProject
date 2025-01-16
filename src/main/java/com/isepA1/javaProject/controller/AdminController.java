@@ -1,6 +1,7 @@
 package com.isepA1.javaProject.controller;
 
 import com.isepA1.javaProject.model.postgres.Employe;
+import com.isepA1.javaProject.model.postgres.Projet;
 import com.isepA1.javaProject.service.EmployeService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,10 +11,16 @@ import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
+import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
+
 @Component
 public class AdminController {
     @Autowired
     private EmployeService employeService;
+    @Autowired
+    private ProjetController projetController;
 
     @FXML
     private Button addAdminButton;
@@ -55,6 +62,10 @@ public class AdminController {
 
     @FXML
     private void createProject(ActionEvent event) {
+        redirect(event,getClass(),"/com/isepA1/javaProject/projetView.fxml","Projet");
+        Projet projet = new Projet("Nouveau projet",new Date());
+        projet.getMembres().add(LoginController.loggedEmployed);
+        projetController.initializeWithProjetId(projet.getId());
     }
 
     @FXML
@@ -91,5 +102,9 @@ public class AdminController {
                         .map(Employe::getNom)
                         .toList()
         );
+    }
+    @FXML
+    private void redirectHomePage(ActionEvent event){
+        redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "Home Page");
     }
 }

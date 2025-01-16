@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.isepA1.javaProject.JavaFXApplication.getContext;
+import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
 
 @Controller
 public class ProjetController {
@@ -59,14 +60,19 @@ public class ProjetController {
 
     @FXML
     private Button sendChatButton;
+    @FXML
+    private Button homePage;
     private Projet projet;
 
     public void initializeWithProjetId(long projetId) {
-        projet = projetService.getProjetById(projetId).orElse(null);
-        if (projet != null) {
-            projectTitle.setText(projet.getNom());
-            projectDescription.setText("Détails du projet : " + projet.getNom());
+        projet = projetService.getProjetById(projetId).orElse(new Projet("Nouveau Projet",new Date()));
+        if (projetService.getProjetById(projetId).isEmpty()){
+            projet.getMembres().add(LoginController.loggedEmployed);
+            projetService.createProjet(projet);
+
         }
+        projectTitle.setText(projet.getNom());
+        projectDescription.setText("Détails du projet : " + projet.getNom());
         setupTaskDragAndDrop();
     }
 
@@ -102,11 +108,11 @@ public class ProjetController {
         Tache tache = new Tache("",new Date(), projet);
         projetService.addTacheToProjet(projet, tache);
         projet.getListeTaches().add(tache);
-        HBox taskBox = createTaskBox(tache.getId());
+        HBox taskBox = createTaskBox(tache);
         toStartTaskList.getChildren().add(taskBox);
     }
 
-    private HBox createTaskBox(long id) {
+    private HBox createTaskBox(Tache tache) {
         HBox taskBox = new HBox(10);
         CheckBox taskCheckBox = new CheckBox();
         Label taskLabel = new Label("Nouvelle Tâche");
@@ -114,7 +120,7 @@ public class ProjetController {
         taskBox.setId("task-" + System.currentTimeMillis());
 
         configureTaskDragAndDrop(taskBox);
-        configureLabelClickEvent(taskLabel, id);
+        configureLabelClickEvent(taskLabel, tache);
 
         taskBox.getChildren().addAll(taskCheckBox, taskLabel);
 
@@ -131,26 +137,26 @@ public class ProjetController {
         });
     }
 
-    private void configureLabelClickEvent(Label taskLabel, long id) {
+    private void configureLabelClickEvent(Label taskLabel, Tache tache) {
         taskLabel.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                redirectToTaskView(event, id);
+                redirectToTaskView(event, tache);
             }
         });
     }
 
-    private void redirectToTaskView(MouseEvent event, long id) {
+    private void redirectToTaskView(MouseEvent event, Tache tache) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/isepA1/javaProject/tacheView.fxml"));
             loader.setControllerFactory(getContext()::getBean);
             Parent root = loader.load();
 
             TacheController tacheController = loader.getController();
-            tacheController.loadTache(id);
+            tacheController.loadTache(tache.getId(), tache.getProjet());
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Tâche");
+            stage.setTitle("Tache");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -166,5 +172,9 @@ public class ProjetController {
             chatMessagesContainer.getChildren().add(messageLabel);
             chatInputField.clear();
         }
+    }
+    @FXML
+    private void redirectHomePage(ActionEvent event){
+        redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "Home Page");
     }
 }

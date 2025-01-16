@@ -26,6 +26,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
+import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
+
 @Component
 public class CalendarController implements Initializable {
     @Autowired
@@ -157,5 +159,10 @@ public class CalendarController implements Initializable {
             tachesMap.computeIfAbsent(tacheDate, k -> new ArrayList<>()).add(tache);
         }
         return tachesMap;
+    }
+
+    @FXML
+    private void redirectHomePage(ActionEvent event){
+        redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "Home Page");
     }
 }

@@ -1,14 +1,13 @@
 package com.isepA1.javaProject.utils;
 
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import org.springframework.context.ApplicationContext;
+
 
 import java.io.IOException;
 
@@ -16,7 +15,7 @@ import static com.isepA1.javaProject.JavaFXApplication.getContext;
 
 public class FxmlHelper {
     @FXML
-    public static void redirect(ActionEvent event, Class c, String fxmlPath, String title) {
+    public static void redirect(Event event, Class c, String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(c.getResource(fxmlPath));
             loader.setControllerFactory(getContext()::getBean);

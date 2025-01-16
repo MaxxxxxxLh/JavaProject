@@ -55,5 +55,6 @@
             </VBox>
          </children>
       </VBox>
+      <Button layoutX="42.0" layoutY="34.0" mnemonicParsing="false" onAction="#redirectHomePage" text="Go to HomePage" />
    </children>
 </AnchorPane>

@@ -57,4 +57,5 @@ public class TacheService {
     public List<Tache> findTacheByDateLimite(Date dateLimite) {
         return tacheRepository.findByDateLimite(dateLimite);
     }
+    public Optional<Tache> findTacheById(long id){return tacheRepository.findById(id);}
 }

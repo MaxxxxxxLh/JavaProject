@@ -16,11 +16,11 @@ public class Projet {
     @OneToMany(mappedBy = "projet")
     private List<Tache> listeTaches;
     private Date dateLimite;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name="projets_membres",
-            joinColumns = @JoinColumn(name="projetId"),
-            inverseJoinColumns = @JoinColumn(name="employeId")
+            name="employe_projet",
+            joinColumns = @JoinColumn(name="projet_id"),
+            inverseJoinColumns = @JoinColumn(name="employe_id")
     )
     private List<Employe> membres;
     public Projet(){}
@@ -44,7 +44,7 @@ public class Projet {
         return this.nom;
     }
 
-    public void setNom(String titre) {
+    public void setNom(String nom) {
         this.nom = nom;
     }
 

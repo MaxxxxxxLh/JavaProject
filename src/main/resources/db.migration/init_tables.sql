@@ -10,25 +10,25 @@ create table Employe (
 create table Projet (
     id INT PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
-    dateLimite DATE
+    date_limite DATE NOT NULL
 );
 
 create table Tache (
     id INT PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
     priorite VARCHAR,
-    dateLimite DATE,
+    date_limite DATE NOT NULL,
     categorie VARCHAR(50),
     commentaires TEXT,
     etat VARCHAR,
-    projetId INT,
-    FOREIGN KEY (projetId) REFERENCES Projet(id) ON DELETE CASCADE
+    projet_id INT NOT NULL,
+    FOREIGN KEY (projet_id) REFERENCES Projet(id) ON DELETE CASCADE
 );
 
 create table Employe_Projet (
-    employeId INT,
-    projetId INT,
-    PRIMARY KEY (employeId, projetId),
-    FOREIGN KEY (employeId) REFERENCES Employe(id) ON DELETE CASCADE,
-    FOREIGN KEY (projetId) REFERENCES Projet(id) ON DELETE CASCADE
+    employe_id INT,
+    projet_id INT,
+    PRIMARY KEY (employe_id, projet_id),
+    FOREIGN KEY (employe_id) REFERENCES Employe(id) ON DELETE CASCADE,
+    FOREIGN KEY (projet_id) REFERENCES Projet(id) ON DELETE CASCADE
 );

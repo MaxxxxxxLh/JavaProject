@@ -1,9 +1,13 @@
 package com.isepA1.javaProject.controller;
+import com.isepA1.javaProject.model.postgres.Projet;
 import com.isepA1.javaProject.service.ProjetService;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javafx.scene.control.*;
+
+import java.util.Date;
 
 import static com.isepA1.javaProject.utils.FxmlHelper.redirect;
 
@@ -22,6 +26,8 @@ public class HomeController {
     @Autowired
     private ProjetService projetService;
 
+    @Autowired
+    private ProjetController projetController;
     @FXML
     public void initialize() {
         long employeId = getCurrentEmployeId();
@@ -42,7 +48,7 @@ public class HomeController {
                 String selectedProjectName = projectListView.getSelectionModel().getSelectedItem();
                 if (selectedProjectName != null) {
                     long projectId = projetService.getProjetByNom(selectedProjectName).getId();
-                    redirectToProjectPage(projectId);
+                    redirectToProjectPage(event, projectId);
                 }
             }
         });
@@ -53,8 +59,10 @@ public class HomeController {
     }
 
 
-    private void redirectToProjectPage(long projetId) {
-        String url = String.format("/com/isepA1/javaProject/projetView.fxml?projetId=%d", projetId);
-        redirect(null, getClass(), url, "Projet");
+    private void redirectToProjectPage(Event event, long projetId) {
+        redirect(event,getClass(),"/com/isepA1/javaProject/projetView.fxml","Projet");
+        Projet projet = new Projet("Nouveau projet",new Date());
+        projet.getMembres().add(LoginController.loggedEmployed);
+        projetController.initializeWithProjetId(projet.getId());
     }
 }

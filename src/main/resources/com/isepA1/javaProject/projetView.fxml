@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.isepA1.javaProject.controller.ProjetController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.isepA1.javaProject.controller.ProjetController">
    <children>
       <VBox layoutX="374.0" layoutY="70.0" prefHeight="549.0" prefWidth="260.0">
          <VBox alignment="TOP_CENTER" prefHeight="547.0" prefWidth="241.0" spacing="10.0">
@@ -49,7 +49,7 @@
             </VBox>
          </VBox>
       </VBox>
-      <Label layoutX="304.0" layoutY="14.0" text="Projet">
+      <Label fx:id="projectTitle" layoutX="304.0" layoutY="14.0" text="Projet">
          <font>
             <Font size="18.0" />
          </font>
@@ -108,5 +108,6 @@
             <Button fx:id="sendChatButton" onAction="#sendMessage" text="Envoyer" />
          </children>
       </HBox>
+      <Button fx:id="homePage" layoutX="19.0" layoutY="15.0" mnemonicParsing="false" onAction="#redirectHomePage" text="Go to HomePage" />
    </children>
 </AnchorPane>
