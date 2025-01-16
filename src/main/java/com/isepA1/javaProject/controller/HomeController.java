@@ -22,22 +22,39 @@ public class HomeController {
     @Autowired
     private ProjetService projetService;
 
-
     @FXML
     public void initialize() {
+        long employeId = getCurrentEmployeId();
+        projectListView.getItems().addAll(projetService.getProjectNamesByEmployeId(employeId));
 
-        projectListView.getItems().addAll(projetService.getAllProjectNames());
+        logoutButton.setOnAction(e -> redirect(e, getClass(), "/com/isepA1/javaProject/loginView.fxml", "Login"));
 
-        logoutButton.setOnAction(e -> redirect(e,getClass(),"/com/isepA1/javaProject/loginView.fxml", "Login"));
-
-        taskHyperLink.setOnAction(e -> redirect(e,getClass(),"/com/isepA1/javaProject/calendrierView.fxml","Calendrier"));
+        taskHyperLink.setOnAction(e -> redirect(e, getClass(), "/com/isepA1/javaProject/calendrierView.fxml", "Calendrier"));
+        
         if(LoginController.loggedEmployed.isAdmin()){
             pageAdminLink.setOnAction(e -> redirect(e,getClass(),"/com/isepA1/javaProject/adminView.fxml","Page Admin"));
         }else{
             pageAdminLink.setText("");
         }
 
+        projectListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                String selectedProjectName = projectListView.getSelectionModel().getSelectedItem();
+                if (selectedProjectName != null) {
+                    long projectId = projetService.getProjetByNom(selectedProjectName).getId();
+                    redirectToProjectPage(projectId);
+                }
+            }
+        });
+    }
+
+    private long getCurrentEmployeId() {
+        return 1L;
+    }
+
+
+    private void redirectToProjectPage(long projetId) {
+        String url = String.format("/com/isepA1/javaProject/projetView.fxml?projetId=%d", projetId);
+        redirect(null, getClass(), url, "Projet");
     }
 }
-
-
