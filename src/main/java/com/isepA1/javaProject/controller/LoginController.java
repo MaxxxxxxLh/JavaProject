@@ -57,6 +57,4 @@ public class LoginController {
         redirect(event, getClass(), "/com/isepA1/javaProject/forgotPasswordView.fxml", "Mot de passe oublié");
     }
 
-
-
 }

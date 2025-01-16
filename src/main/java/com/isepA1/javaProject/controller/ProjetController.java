@@ -1,5 +1,6 @@
 package com.isepA1.javaProject.controller;
 
+import com.isepA1.javaProject.model.enums.Etat;
 import com.isepA1.javaProject.model.postgres.Tache;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -118,10 +119,19 @@ public class ProjetController {
         if (projetService.getProjetById(projetId).isEmpty()){
             projet.getMembres().add(LoginController.loggedEmployed);
             projetService.createProjet(projet);
-
         }
         projectTitle.setText(projet.getNom());
         projectDescription.setText("Détails du projet : " + projet.getNom());
+        for(Tache tache: projet.getListeTaches()){
+            if(tache.getEtat() == Etat.A_FAIRE){
+                addToStartTask(tache);
+            }else if(tache.getEtat() == Etat.EN_COURS){
+                addInProgressTask(tache);
+            }else{
+                addCompletedTask(tache);
+            }
+        }
+        projetService.saveProjet(projetId);
         setupTaskDragAndDrop();
     }
 
@@ -160,6 +170,22 @@ public class ProjetController {
         HBox taskBox = createTaskBox(tache);
         toStartTaskList.getChildren().add(taskBox);
     }
+    public void addToStartTask(Tache tache) {
+        projet.getListeTaches().add(tache);
+        HBox taskBox = createTaskBox(tache);
+        toStartTaskList.getChildren().add(taskBox);
+    }
+    public void addInProgressTask(Tache tache) {
+        projet.getListeTaches().add(tache);
+        HBox taskBox = createTaskBox(tache);
+        inProgressTaskList.getChildren().add(taskBox);
+    }
+    public void addCompletedTask(Tache tache) {
+        projet.getListeTaches().add(tache);
+        HBox taskBox = createTaskBox(tache);
+        completedTaskList.getChildren().add(taskBox);
+    }
+
 
     private HBox createTaskBox(Tache tache) {
         HBox taskBox = new HBox(10);
@@ -224,6 +250,7 @@ public class ProjetController {
     }
     @FXML
     private void redirectHomePage(ActionEvent event){
+        projetService.saveProjet(projet.getId());
         redirect(event, getClass(), "/com/isepA1/javaProject/homeView.fxml", "Home Page");
     }
 }

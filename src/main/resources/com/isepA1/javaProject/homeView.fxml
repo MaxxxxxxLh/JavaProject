@@ -13,7 +13,7 @@
    <children>
       <VBox layoutX="486.0" layoutY="24.0" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Button fx:id="logoutButton" mnemonicParsing="false" text="Déconnection" textFill="#f00e0e" />
+            <Button fx:id="logoutButton" mnemonicParsing="false" text="Déconnexion" textFill="#f00e0e" />
          </children>
       </VBox>
       <ListView fx:id="projectListView" layoutX="67.0" layoutY="118.0" prefHeight="242.0" prefWidth="267.0" />

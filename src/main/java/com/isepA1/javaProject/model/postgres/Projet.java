@@ -13,7 +13,7 @@ public class Projet {
     private long id;
     private String nom;
 
-    @OneToMany(mappedBy = "projet")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "projet")
     private List<Tache> listeTaches;
     private Date dateLimite;
     @ManyToMany(fetch = FetchType.EAGER)

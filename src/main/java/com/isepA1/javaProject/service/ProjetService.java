@@ -21,6 +21,9 @@ public class ProjetService {
         this.projetRepository = projetRepository;
     }
 
+    public void saveProjet(long id){
+        projetRepository.findById(id).ifPresent(projetRepository::save);
+    }
     public List<Projet> getAllProjets() {
         return projetRepository.findAll();
     }
